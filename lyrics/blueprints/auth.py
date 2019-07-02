@@ -3,8 +3,8 @@ import functools
 from flask import Blueprint, request, redirect, url_for, flash, render_template, session, g
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from .models import User
-from . import db
+from lyrics.models import User
+from lyrics import db
 
 bp = Blueprint('auth', __name__)
 
@@ -24,12 +24,12 @@ def register():
         elif not email:
             error = 'Email is required.'
         elif User.query.filter_by(email=email).first() is not None:
-            error = f'User with such {email} already registered'
+            error = f'User with such email already registered'
 
         if error is None:
             user = User(name=name, email=email, password=generate_password_hash(password))
             db.session.add(user)
-            db.commit()
+            db.session.commit()
             return redirect(url_for('auth.login'))
         flash(error)
     return render_template('auth/register.html')
@@ -39,20 +39,21 @@ def register():
 def login():
     if request.method == 'POST':
         password = request.form['password']
-        email = request.form['password']
+        email = request.form['email']
 
         error = None
         user = User.query.filter_by(email=email).first()
 
         if not user:
             error = 'Incorrect email.'
-        elif not check_password_hash(user['password'], password):
+        elif not check_password_hash(user.password, password):
             error = 'Incorrect password.'
 
         if error is None:
             session.clear()
-            session['user_id'] = user['id']
-            return redirect(url_for('index'))
+            session['user_id'] = user.id
+            session.permanent = True
+            return redirect(url_for('songs.list_songs'))
 
         flash(error)
     return render_template('auth/login.html')
@@ -65,13 +66,13 @@ def load_logged_in_user():
     if user_id is None:
         g.user = None
     else:
-        g.user = User.query.filter_by(id=user_id)
+        g.user = User.query.filter_by(id=user_id).first()
 
 
 @bp.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('index'))
+    return redirect(url_for('songs.list_songs'))
 
 
 def login_required(view):
