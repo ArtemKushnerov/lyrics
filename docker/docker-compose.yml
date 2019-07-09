@@ -8,6 +8,8 @@ services:
       dockerfile: docker/Dockerfile
     ports:
       - "5000:5000"
+    volumes:
+      - ..:/lyrics
     links:
       - postgres:postgres
     env_file:
