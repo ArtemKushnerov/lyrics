@@ -12,9 +12,9 @@ def init_db(app):
 
 class Song(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.Text())
-    album = db.Column(db.String(100))
-    name = db.Column(db.String(100))
+    text = db.Column(db.Text(), nullable=False)
+    album_id = db.Column(db.Integer, db.ForeignKey('album.id'))
+    name = db.Column(db.String(100), nullable=False)
 
 
 class Author:
@@ -25,12 +25,14 @@ class Translation:
     pass
 
 
-class Album:
-    pass
+class Album(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    songs = db.relationship(Song, backref='album', lazy=True)
 
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
-    name = db.Column(db.String(1000))
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(1000), nullable=False)
