@@ -1,7 +1,7 @@
 from flask import Flask
 
 from lyrics.admin import init_admin
-from .models import init_db
+from .database import init_db
 from lyrics.models import Song
 from lyrics.session import RedisSessionInterface
 

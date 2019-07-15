@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %} {{ album.name }}{% endblock %}</h1>
+{% if album.year %}
+released on {{ album.year }}
+{%endif%}
+{% endblock %}
+
+{% block content %}
+<ul>
+    {% for song in album.songs %}
+    <li><a href="{{ url_for('songs.get_song', song_id=song.id) }}">{{ song.name }}</a></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

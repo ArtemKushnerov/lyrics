@@ -1,9 +1,11 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - Beatles Lyrics</title>
+<title>{% block title %}{% endblock %} -  Beatles Lyrics</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <nav>
   <h1><a href="{{ url_for('songs.list_songs')}}">Beatles Lyrics</a></h1>
   <ul>
+    <li><a href="{{ url_for('songs.list_songs') }}">Songs</a>
+    <li><a href="{{ url_for('songs.list_albums') }}">Albums</a>
     {% if g.user %}
       <li><span>{{ g.user.name }}</span>
       <li><a href="{{ url_for('auth.logout') }}">Log Out</a>

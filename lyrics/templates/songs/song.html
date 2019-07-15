@@ -2,6 +2,10 @@
 
 {% block header %}
 <h1>{% block title %}{{ song.name }}{% endblock %}</h1>
+{% if song.album %}
+<p>Album <a href="{{ url_for('songs.get_album', album_id=song.album.id) }}">{{ song.album.name }}</a></p>
+{% endif %}
+
 {% endblock %}
 
 {% block content %}

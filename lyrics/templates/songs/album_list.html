@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Albums{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<ul>
+    {% for album in albums %}
+    <li><a href="{{ url_for('songs.get_album', album_id=album.id) }}">{{ album.name }}</a></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
