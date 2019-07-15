@@ -25,3 +25,7 @@ nav ul li a, nav ul li span, header .action { display: block; padding: 0.5rem; }
 input.danger { color: #cc2f2e; }
 input[type=submit] { align-self: start; min-width: 10em; }
 p{white-space: pre-wrap;}
+ul {
+list-style-type: none;
+}
+a {text-decoration: none; }

@@ -3,8 +3,7 @@ import functools
 from flask import Blueprint, request, redirect, url_for, flash, render_template, session, g
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from lyrics.models import User
-from lyrics import db
+from lyrics.models import User, db
 
 bp = Blueprint('auth', __name__)
 

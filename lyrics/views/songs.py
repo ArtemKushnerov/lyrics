@@ -8,7 +8,7 @@ bp = Blueprint('songs', __name__)
 
 @bp.route('/', methods=['GET'])
 def list_songs():
-    songs = Song.query.all()
+    songs = Song.query.order_by(Song.name).all()
     return render_template('songs/song_list.html', songs=songs)
 
 
