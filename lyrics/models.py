@@ -1,5 +1,5 @@
+from lyrics.utils import shortuuid
 from .database import db
-from .database.custom_types import GUID
 
 
 class Entity(db.Model):
@@ -7,7 +7,7 @@ class Entity(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    uuid = db.Column(GUID())
+    uuid = db.Column(db.String(8), unique=True, index=True, nullable=False, default=shortuuid)
 
 
 class Song(Entity):
