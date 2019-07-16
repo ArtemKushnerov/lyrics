@@ -12,17 +12,19 @@ def list_songs():
     return render_template('songs/song_list.html', songs=songs)
 
 
-@bp.route('/<int:song_id>', methods=['GET'])
+@bp.route('/<song_id>', methods=['GET'])
 def get_song(song_id):
-    song = Song.query.filter_by(id=song_id).first()
+    song = Song.query.filter_by(uuid=song_id).first()
     if not song:
         abort(404)
     return render_template('songs/song.html', song=song)
 
 
-@bp.route('/album/<int:album_id>', methods=['GET'])
+@bp.route('/album/<album_id>', methods=['GET'])
 def get_album(album_id):
-    album = Album.query.filter_by(id=album_id).first()
+    print('start album')
+    album = Album.query.filter_by(uuid=album_id).first()
+    print('album')
     if not album:
         abort(404)
     return render_template('songs/album.html', album=album)

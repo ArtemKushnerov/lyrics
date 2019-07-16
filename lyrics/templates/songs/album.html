@@ -10,7 +10,7 @@ released on {{ album.year }}
 {% block content %}
 <ul>
     {% for song in album.songs %}
-    <li><a href="{{ url_for('songs.get_song', song_id=song.id) }}">{{ song.name }}</a></li>
+    <li><a href="{{ url_for('songs.get_song', song_id=song.uuid) }}">{{ song.name }}</a></li>
     {% endfor %}
 </ul>
 
