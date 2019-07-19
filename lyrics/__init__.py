@@ -20,4 +20,7 @@ def create_app():
     from lyrics.views import songs
     app.register_blueprint(songs.bp)
 
+    from lyrics.views import user
+    app.register_blueprint(user.bp)
+
     return app

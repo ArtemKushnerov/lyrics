@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Profile{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<img src="{{ user.avatar }}"/>
+<form action="/avatars" method="POST" enctype="multipart/form-data">
+
+    <label for="user_file">Upload Avatar</label>
+    <br></br>
+    <input type="file" name="user_file">
+    <br></br>
+    <button type="submit">Upload</button>
+
+</form>
+
+<p>Hello, {{ user.name }}</p>
+{% endblock %}

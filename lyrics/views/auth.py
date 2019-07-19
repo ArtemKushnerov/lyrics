@@ -2,10 +2,22 @@ import functools
 
 from flask import Blueprint, request, redirect, url_for, flash, render_template, session, g
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from werkzeug.utils import secure_filename
+from lyrics.config import INCOGNITO_PIC_ADDRESS, S3_BUCKET
+from lyrics.helpers import upload_file_to_s3
 from lyrics.models import User, db
 
 bp = Blueprint('auth', __name__)
+
+
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('auth.login'))
+        return view(**kwargs)
+
+    return wrapped_view
 
 
 @bp.route('/register', methods=['GET', 'POST'])
@@ -72,13 +84,3 @@ def load_logged_in_user():
 def logout():
     session.clear()
     return redirect(url_for('songs.list_songs'))
-
-
-def login_required(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        if g.user is None:
-            return redirect(url_for('auth.login'))
-        return view(**kwargs)
-
-    return wrapped_view

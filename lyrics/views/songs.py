@@ -22,9 +22,7 @@ def get_song(song_id):
 
 @bp.route('/album/<album_id>', methods=['GET'])
 def get_album(album_id):
-    print('start album')
     album = Album.query.filter_by(uuid=album_id).first()
-    print('album')
     if not album:
         abort(404)
     return render_template('songs/album.html', album=album)
